@@ -206,3 +206,11 @@ h1 {
     transition-duration: 490ms;
     transform: translate3d(440px, 0, 0);
 }
+
+.datarow {
+    border: solid black 1px;
+}
+
+.table {}
+
+.graph {}
