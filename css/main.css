@@ -214,3 +214,7 @@ h1 {
 .table {}
 
 .graph {}
+
+#chart svg {
+    height: 400px;
+}
