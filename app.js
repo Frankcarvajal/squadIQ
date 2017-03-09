@@ -32,14 +32,60 @@ const initialState = {
 
 // Function to Obtain Data:
 
+var names = [];
 
-function makeDataHtml(response) {
-    let mappedHtml = response.players.map(function(item, index) {
-        return item.name;
-
+function makeNames(data) {
+    let nameOfPlayers = data.players.map(function(item, index) {
+        return `${item.name}`;
     });
-    console.log(mappedHtml);
-    $('.datacoming').html(mappedHtml);
+    nameOfPlayers.forEach(function(item) {
+        names.push(item);
+    })
+    console.log(names);
+    //whatever we do with our data has to be done within here.
+
+}
+
+var positions = [];
+
+function makePosition(data) {
+    let thePositions = data.players.map(function(item, index) {
+        return `${item.position}`;
+    });
+    thePositions.forEach(function(item) {
+        positions.push(item);
+    })
+    console.log(positions);
+    //whatever we do with our data has to be done within here.
+
+}
+
+var dobs = [];
+
+function makeDob(data) {
+    let dateOfB = data.players.map(function(item, index) {
+        return `${item.dateOfBirth}`;
+    });
+    dateOfB.forEach(function(item) {
+        dobs.push(item);
+    })
+    console.log(dobs);
+    //whatever we do with our data has to be done within here.
+
+}
+
+var marketValues = [];
+
+function makeValue(data) {
+    let playerValues = data.players.map(function(item, index) {
+        return `${item.marketValue}`;
+    });
+    playerValues.forEach(function(item) {
+        marketValues.push(item);
+    })
+    console.log(marketValues);
+    //whatever we do with our data has to be done within here.
+
 }
 
 
@@ -53,25 +99,26 @@ function getData(callback) {
         url: `http://api.football-data.org/v1/teams/${i}/players`,
         dataType: 'json',
         type: 'GET',
-    }).done(function(response) {
+    }).done(function(data) {
 
-        return response;
+        makeNames(data);
+        makePosition(data);
+        makeDob(data);
+        makeValue(data);
 
-        // console.log(response);
-
-        // let names = response.players.map(function(item, index) {
+        // let names = data.players.map(function(item, index) {
         //     return item.name;
         // });
 
-        // let positions = response.players.map(function(item, index) {
+        // let positions = data.players.map(function(item, index) {
         //     return item.position;
         // });
 
-        // let birthDates = response.players.map(function(item, index) {
+        // let birthDates = data.players.map(function(item, index) {
         //     return item.dateOfBirth;
         // });
 
-        // let currentValues = response.players.map(function(item, index) {
+        // let currentValues = data.players.map(function(item, index) {
         //     return item.marketValue;
         // });
 
@@ -82,13 +129,15 @@ function getData(callback) {
 
     });
 }
-getData(makeDataHtml);
+
+getData(makeNames, makePosition, makeDob, makeValue);
+
 
 // iterate through each object in the array and pull out the specific data of the three variables.
 
-// console.log(response.players[players.length].dateOfBirth);
+// console.log(data.players[players.length].dateOfBirth);
 
-// response.players[0].dateOfBirth
+// data.players[0].dateOfBirth
 
 // Step 4: Render
 // ==========================
@@ -106,42 +155,42 @@ getData(makeDataHtml);
 
 //Invocation of Function with Arguments:
 
-// $(function() {
-//     // Part of render function:
+$(function() {
+    // Part of render function:
 
-//     const chartElement = $('#chart')
+    const chartElement = $('#chart')
 
-//     new Chart(chartElement, {
-//         type: 'bubble',
-//         data: {
-//             datasets: [{
-//                 label: 'First Dataset',
+    new Chart(chartElement, {
+        type: 'bubble',
+        data: {
+            datasets: [{
+                label: 'First Dataset',
 
-//                 // Data from state goes here:
-//                 data: [
-//                     { x: 10, y: 10, r: 10 },
-//                     { x: 15, y: 15, r: 10 }
-//                 ]
-//             }]
-//         },
-//         options: {
-//             scales: {
-//                 xAxes: [{
-//                     type: 'linear',
-//                     ticks: {
-//                         min: 0,
-//                         max: 20
-//                     }
-//                 }],
+                // Data from state goes here:
+                data: [
+                    { x: 10, y: 10, r: 10 },
+                    { x: 15, y: 15, r: 10 }
+                ]
+            }]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    type: 'linear',
+                    ticks: {
+                        min: 0,
+                        max: 20
+                    }
+                }],
 
-//                 yAxes: [{
-//                     type: 'linear',
-//                     ticks: {
-//                         min: 0,
-//                         max: 20
-//                     }
-//                 }]
-//             }
-//         }
-//     })
-// })
+                yAxes: [{
+                    type: 'linear',
+                    ticks: {
+                        min: 0,
+                        max: 20
+                    }
+                }]
+            }
+        }
+    })
+})
