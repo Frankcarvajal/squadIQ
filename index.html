@@ -2,11 +2,10 @@
 <html lang="en">
 
 <head>
-
     <!-- Basic Page Needs
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <meta charset="utf-8">
-    <title>Your page title here :)</title>
+    <title>squadIQ</title>
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -14,11 +13,11 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- FONT
+    <!-- FONT Links
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
 
-    <!-- CSS
+    <!-- CSS Links
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/skeleton.css">
@@ -26,20 +25,12 @@
     <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/font-awesome.css">
 
-
-
-
-    <!-- Favicon
+    <!-- Icons
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <link rel="icon" type="image/png" href="images/favicon.png">
-
 </head>
 
 <body>
-
-
-    <!-- Primary Page Layout
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <div class="container">
         <div class="bannerrow">
             <div class="row">
@@ -50,73 +41,22 @@
             </div>
             <div class="row">
                 <div class="twelve column banner2">
-                    <nav class="menu">
-                        <input type="checkbox" href="#" class="menu-open" name="menu-open" id="menu-open" />
-                        <label class="menu-open-button" for="menu-open">
-                        <span class="hamburger hamburger-1"></span>
-                        <span class="hamburger hamburger-2"></span>
-                        <span class="hamburger hamburger-3"></span>
-                        </label>
-
-                        <a href="#" class="menu-item"> <i class="fa fa-usd"></i> </a>
-                        <a href="#" class="menu-item"> <i class="fa fa-birthday-cake"></i> </a>
-                        <a href="#" class="menu-item"> <i class="fa fa-street-view"></i> </a>
-
-                    </nav>
-
-
-                    <!-- filters -->
-                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-                        <defs>
-                        <filter id="shadowed-goo">
-                            
-                            <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="10" />
-                            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
-                            <feGaussianBlur in="goo" stdDeviation="3" result="shadow" />
-                            <feColorMatrix in="shadow" mode="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 -0.2" result="shadow" />
-                            <feOffset in="shadow" dx="1" dy="1" result="shadow" />
-                            <feComposite in2="shadow" in="goo" result="goo" />
-                            <feComposite in2="goo" in="SourceGraphic" result="mix" />
-                        </filter>
-                        <filter id="goo">
-                            <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="10" />
-                            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
-                            <feComposite in2="goo" in="SourceGraphic" result="mix" />
-      </filter>
-    </defs>
-</svg>
 
                 </div>
             </div>
         </div>
-
-
         <div class="datarow">
             <div class="team-name"></div>
 
         </div>
-
-        <!-- </div> -->
         <div class="six column graph">
             <canvas id='chart'></canvas>
         </div>
-        <!-- </div> -->
     </div>
-    </div>
-    </div>
-
 
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>
-    <script type="text/javascript" src="moment.js"></script>
-    <script>
-        moment().format();
-    </script>
     <script type="text/javascript" src="app.js"></script>
-
-
-
-
 
     <!-- End Document
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->

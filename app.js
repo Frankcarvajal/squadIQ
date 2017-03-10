@@ -31,54 +31,54 @@ const initialState = {
 
 // Function to Obtain Data:
 
-// var names = [];
-// var positions = [];
+
+var names = [];
+var positions = [];
 var dobs = [];
 var marketValues = [];
 var jerseyNumbers = [];
 
-// function makeNames(data) {
-//     let nameOfPlayers = data.players.map(function(item, index) {
-//         return `${item.name}`;
-//     });
-//     nameOfPlayers.forEach(function(item) {
-//         names.push(item);
-//     })
-//     console.log(names);
-//     //whatever we do with our data has to be done within here.
-// }
+function makeNames(data) {
+    let nameOfPlayers = data.players.map(function(item, index) {
+        return `${item.name}`;
+    });
+    nameOfPlayers.forEach(function(item) {
+            names.push(item);
+        })
+        // console.log(names);
+        //whatever we do with our data has to be done within here.
+}
 
 function makeNumber(data) {
     let jerseyNumber = data.players.map(function(item, index) {
         return `${item.jerseyNumber}`;
     });
     jerseyNumber.forEach(function(item) {
-        item = parseInt(item)
-        jerseyNumbers.push(item);
-    })
-    console.log(jerseyNumbers);
+            item = parseInt(item)
+            jerseyNumbers.push(item);
+        })
+        // console.log(jerseyNumbers);
 }
 
-// function makePosition(data) {
-//     let thePositions = data.players.map(function(item, index) {
-//         return `${item.position}`;
-//     });
-//     thePositions.forEach(function(item) {
-//         positions.push(item);
-//     })
-//     console.log(positions);
-//     //whatever we do with our data has to be done within here.
-// }
+function makePosition(data) {
+    let thePositions = data.players.map(function(item, index) {
+        return `${item.position}`;
+    });
+    thePositions.forEach(function(item) {
+            positions.push(item);
+        })
+        // console.log(positions);
+}
 
 function makeDob(data) {
     let dateOfB = data.players.map(function(item, index) {
         return `${item.dateOfBirth}`;
     });
     dateOfB.forEach(function(item) {
-        item = new Date().getFullYear() - parseInt(item)
-        dobs.push(item);
-    })
-    console.log(dobs);
+            item = new Date().getFullYear() - parseInt(item)
+            dobs.push(item);
+        })
+        // console.log(dobs);
 }
 
 function makeValue(data) {
@@ -87,11 +87,11 @@ function makeValue(data) {
         return `${item.marketValue}`;
     });
     playerValues.forEach(function(item) {
-        item = item.replace(/\D/g, '');
-        item = parseInt(item)
-        marketValues.push(item);
-    })
-    console.log(marketValues);
+            item = item.replace(/\D/g, '');
+            item = parseInt(item)
+            marketValues.push(item);
+        })
+        // console.log(marketValues);
 }
 
 function teamNameHtml(data) {
@@ -100,21 +100,25 @@ function teamNameHtml(data) {
         return ` <div class="one column iconblock"> <img src="${data.crestUrl}" id="team-icon"> </div> <div class="four column"> <h2 class="team-name-class" style="display:inline">${data.name}</h2> </div> `;
     };
     $('.team-name').html(mappedHtml);
+    // console.log(mappedHtml);
 }
 
-// WHAT IS LEFT?
-// 1. Search Input Bar and button ( form input, click event listeners, & btn  )
-// 2. Optimize CSS layout of Icon/Name
-// 3. Control Changes to Graph Colors 
-// 4. Ajax url # function for assignment to team names . see below.
 
 
-// Independent variable to determine team data request
-i = 81; // goal is to assign the teams name to each number for inputting into the ajax          request. 
-// when user types in a name in input and clicks search button
-// the ajax request url changes to the number assigned to the string that the user tyoed. 
+// AJAX Calls to API to collect Data:
+// ––––––––––––––––––––––––––––––––––
 
-// 5: bayern, 81: barca, 86: RM i can go from team 1 to team 460
+i = 4;
+
+// Independent variable to determine team data ajax request.
+// Assign the teams name to each number for inputting into the ajax request. 
+// when user types in a name in input and clicks search button,
+// the ajax request url changes to the number assigned to the string that the user typed. 
+
+
+// Some team numbers: 
+// 5: bayern, 81: barca, 4: dortmund, 86: RM, 109: juve, 559: svla, 338: lcfc,
+// 65: man city, 73: tott, 57: arsenal, 113: napoli
 
 
 function getData(callback) {
@@ -125,17 +129,15 @@ function getData(callback) {
         type: 'GET',
     }).done(function(data) {
         // makeNames(data);
-        makeNumber(data);
         // makePosition(data);
+        makeNumber(data);
         makeDob(data);
         makeValue(data);
         makeGraph()
     });
 }
 
-getData();
-
-
+// Second Ajax request necessary due to url difference / API scope
 function getTeamName(callback) {
     $.ajax({
         headers: { 'X-Auth-Token': apiKey },
@@ -147,51 +149,15 @@ function getTeamName(callback) {
     });
 }
 
-getTeamName();
-
-// iterate through each object in the array and pull out the specific data of the three variables.
-
-// console.log(data.players[players.length].dateOfBirth);
-
-// data.players[0].dateOfBirth
 
 // Step 4: Render
 // ==========================
 
-
-
-
-// Step 5: User Actions
-// ==========================
-
-
-// All Teams are assigned to a number and for get team name function
-// we have access to any team with a number. 
-// We need to connect the input and search button 
-
-
-
-
-
-
-
-
-
-// Initialize
-// ==========================
-
-//Invocation of Function with Arguments:
-
-
+// Graph Creation & Data
+// –––––––––––––––––––––
 function makeGraph() {
-    // Part of render function:
-
     const chartElement = $('#chart')
-
-    // Start with three arrays, age, value, jersey
-
     var data = [];
-
     dobs.forEach(function(item, index) {
         var value = marketValues[index] / 1000000;
         var number = jerseyNumbers[index];
@@ -204,11 +170,10 @@ function makeGraph() {
         type: 'bubble',
         data: {
             datasets: [{
-                label: 'Age  #  $ 1=$1M)',
+                label: '# Age $ 1=$1M)',
                 // Data from state goes here:
                 data: data
                     // number, age, market value
-                    // 
             }]
         },
         options: {
@@ -233,3 +198,30 @@ function makeGraph() {
         }
     })
 }
+
+
+// Step 5: User Actions (Event Listeners)
+// ==========================
+
+// i can go from team 1 to team 460
+
+// All Teams are assigned to a number and for get team name function
+// we have access to any team with a number. 
+// We need to connect the input and search button 
+
+
+// Initialize
+// ==========================
+
+//Invocation of Functions:
+
+getData();
+getTeamName();
+
+// WHAT IS LEFT?
+// –––––––––––––
+
+// 1. Search Input Bar and button ( form input, click event listeners, & btn  )
+// 2. Optimize CSS layout of Icon/Name
+// 3. Control Changes to Graph Colors 
+// 4. Ajax url # function for assignment to team names . see below.
