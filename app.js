@@ -134,6 +134,7 @@ teamInfo = {
  "bayern": 5,
  "dortmund": 4,
  "napoli": 113,
+ "juventus": 109,
  "barcelona": 81,
  "real madrid": 86
 }
@@ -217,7 +218,7 @@ function makeGraph() {
     type: 'bubble',
     data: {
       datasets: [{
-        label: '# Age $ (1=$1M)',
+        label: 'x: kit # // y: player age // dot size: current value (1=€1M)',
         // Data from state goes here:
         data: data
             // number, age, market value
