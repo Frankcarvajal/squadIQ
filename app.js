@@ -1,5 +1,4 @@
-/*
-Developers: Franklin Carvajal & Colin Van Sickle
+/* Developers: Franklin Carvajal & Colin Van Sickle
 Date: 3.9.17
 Project: Capstone I (API)
 */
@@ -32,80 +31,66 @@ const initialState = {
 
 // Function to Obtain Data:
 
-var names = [];
-
-function makeNames(data) {
-    let nameOfPlayers = data.players.map(function(item, index) {
-        return `${item.name}`;
-    });
-    nameOfPlayers.forEach(function(item) {
-        names.push(item);
-    })
-    console.log(data);
-    console.log(names);
-    //whatever we do with our data has to be done within here.
-
-}
-
+// var names = [];
+// var positions = [];
+var dobs = [];
+var marketValues = [];
 var jerseyNumbers = [];
 
-function jerseyNumber(data) {
-    let theJerseyNumber = data.players.map(function(item, index) {
+// function makeNames(data) {
+//     let nameOfPlayers = data.players.map(function(item, index) {
+//         return `${item.name}`;
+//     });
+//     nameOfPlayers.forEach(function(item) {
+//         names.push(item);
+//     })
+//     console.log(names);
+//     //whatever we do with our data has to be done within here.
+// }
+
+function makeNumber(data) {
+    let jerseyNumber = data.players.map(function(item, index) {
         return `${item.jerseyNumber}`;
     });
-    theJerseyNumber.forEach(function(item) {
+    jerseyNumber.forEach(function(item) {
+        item = parseInt(item)
         jerseyNumbers.push(item);
     })
-    console.log(data);
     console.log(jerseyNumbers);
-    //whatever we do with our data has to be done within here.
-
 }
 
-var positions = [];
-
-function makePosition(data) {
-    let thePositions = data.players.map(function(item, index) {
-        return `${item.position}`;
-    });
-    thePositions.forEach(function(item) {
-        positions.push(item);
-    })
-    console.log(positions);
-    //whatever we do with our data has to be done within here.
-
-}
-
-var dobs = [];
+// function makePosition(data) {
+//     let thePositions = data.players.map(function(item, index) {
+//         return `${item.position}`;
+//     });
+//     thePositions.forEach(function(item) {
+//         positions.push(item);
+//     })
+//     console.log(positions);
+//     //whatever we do with our data has to be done within here.
+// }
 
 function makeDob(data) {
     let dateOfB = data.players.map(function(item, index) {
-        // console.log(item.dateOfBirth);
-        return moment(`${item.dateOfBirth}`, "YYYY-MM-DD").month(0).from(moment().month(0)).substr(0, item.dateOfBirth.length - 8);
-
+        return `${item.dateOfBirth}`;
     });
     dateOfB.forEach(function(item) {
+        item = new Date().getFullYear() - parseInt(item)
         dobs.push(item);
     })
     console.log(dobs);
-    //whatever we do with our data has to be done within here.
-
-
-
 }
-
-var marketValues = [];
 
 function makeValue(data) {
     let playerValues = data.players.map(function(item, index) {
         return `${item.marketValue}`;
     });
     playerValues.forEach(function(item) {
+        item = item.replace(/\D/g, '');
+        item = parseInt(item)
         marketValues.push(item);
     })
     console.log(marketValues);
-    //whatever we do with our data has to be done within here.
-
 }
 
 
@@ -121,37 +106,16 @@ function getData(callback) {
         type: 'GET',
     }).done(function(data) {
 
-        makeNames(data);
-        jerseyNumber(data);
-        makePosition(data);
+        // makeNames(data);
+        makeNumber(data);
+        // makePosition(data);
         makeDob(data);
         makeValue(data);
-
-        // let names = data.players.map(function(item, index) {
-        //     return item.name;
-        // });
-
-        // let positions = data.players.map(function(item, index) {
-        //     return item.position;
-        // });
-
-        // let birthDates = data.players.map(function(item, index) {
-        //     return item.dateOfBirth;
-        // });
-
-        // let currentValues = data.players.map(function(item, index) {
-        //     return item.marketValue;
-        // });
-
-        // console.log(names);
-        // console.log(positions);
-        // console.log(birthDates);
-        // console.log(currentValues);
-
+        makeGraph()
     });
 }
 
-getData(makeNames, jerseyNumber, makePosition, makeDob, makeValue);
+getData();
 
 
 // iterate through each object in the array and pull out the specific data of the three variables.
@@ -170,18 +134,28 @@ getData(makeNames, jerseyNumber, makePosition, makeDob, makeValue);
 // ==========================
 
 
-// Have if else function if under a million sort awkwardly if > 1m map out range, else map out four digits == .75
-
 
 // Initialize
 // ==========================
 
 //Invocation of Function with Arguments:
 
-$(function() {
+
+function makeGraph() {
     // Part of render function:
 
     const chartElement = $('#chart')
+
+    // Start with three arrays, age, value, jersey
+
+    var data = [];
+    dobs.forEach(function(item, index) {
+        var value = marketValues[index];
+        var number = jerseyNumbers[index];
+        data.push({ x: item, y: number, r: 5 });
+    })
+
+    // end with this [{ x: 10, y: 10, r: 10 }, ...]
 
     new Chart(chartElement, {
         type: 'bubble',
@@ -190,10 +164,9 @@ $(function() {
                 label: 'First Dataset',
 
                 // Data from state goes here:
-                data: [
-                    { x: 10, y: 10, r: 75 },
-                    { x: 15, y: 15, r: 10 }
-                ]
+                data: data
+                    // number, age, market value
+                    // 
             }]
         },
         options: {
@@ -201,8 +174,8 @@ $(function() {
                 xAxes: [{
                     type: 'linear',
                     ticks: {
-                        min: 0,
-                        max: 20
+                        min: 15,
+                        max: 37
                     }
                 }],
 
@@ -210,10 +183,10 @@ $(function() {
                     type: 'linear',
                     ticks: {
                         min: 0,
-                        max: 20
+                        max: 45
                     }
                 }]
             }
         }
     })
-})
+}

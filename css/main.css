@@ -215,7 +215,7 @@ h1 {
 
 .graph {}
 
-#chart svg {
-    height: 400px;
-    width: 20px;
+#chart {
+    height: 5px;
+    width: 5px;
 }
