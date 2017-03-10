@@ -31,28 +31,33 @@
 </head>
 
 <body>
-    <div class="container">
-        <div class="bannerrow">
-            <div class="row">
-                <div class="twelve column banner">
-                    <H1>squadIQ</H1>
-                    <!--Home button-->
+  <div class="container">
+      <div class="bannerrow">
+          <div class="row">
+              <div class="twelve column banner">
+                  <H1>squadIQ</H1>
+                  <!--Home button-->
+              </div>
+          </div>
+          <div class="row">
+              <div class="twelve column banner2">
+               </div>
+          </div>
+      </div>
+      <div class="datarow">
+        <div class="team-name"></div>
+      </div>
+      <div class="six columns">
+                    <label for="search"></label>
+                    <input class="u-pull-right" type="text" id="search" placeholder="Arsenal, Barçelona...">
                 </div>
-            </div>
-            <div class="row">
-                <div class="twelve column banner2">
-
+                <div class="six columns">
+                    <label for="btn"></label>
+                    <input class="button-primary btnmargin" type="submit" value="Submit" id="btn">
                 </div>
-            </div>
-        </div>
-        <div class="datarow">
-            <div class="team-name"></div>
-
-        </div>
-        <div class="six column graph">
-            <canvas id='chart'></canvas>
-        </div>
-    </div>
+          <canvas id='chart'></canvas>
+      </div>
+  </div>
 
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>

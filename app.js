@@ -36,6 +36,7 @@ var positions = [];
 var dobs = [];
 var marketValues = [];
 var jerseyNumbers = [];
+var teamNames = [];
 
 function makeNames(data) {
   let nameOfPlayers = data.players.map(function(item, index) {
@@ -48,6 +49,8 @@ function makeNames(data) {
 } //indentify name of player in index as string
 
 function makePosition(data) {
+  
+
   let thePositions = data.players.map(function(item, index) {
     return `${item.position}`;
   });
@@ -94,12 +97,22 @@ function makeValue(data) {
 function teamNameHtml(data) {
   console.log(data.name);
   let mappedHtml = function(item, index) {
-    return ` <div class="one column iconblock"> <img src="${data.crestUrl}" id="team-icon"> </div> <div class="four column"> <h2 class="team-name-class" style="display:inline">${data.name}</h2> </div> `;
+    return ` <div class="ten column iconblock"> <img src="${data.crestUrl}" id="team-icon"><h2 class="team-name-class" style="display:inline">${data.name}</h2> </div> `;
   };
   $('.team-name').html(mappedHtml);
   // console.log(mappedHtml);
 } //plug team name and crest into HTML after accesing in getTeamName function
 
+
+function getTeamNames(data) {
+  let theNames = data.teams.map(function(item, index) {
+    return `${item.name}`;
+  });
+  theNames.forEach(function(item) {
+    teamNames.push(item);
+  })
+  console.log(teamNames);
+} //identify team's player positions as array
 
 // AJAX Calls to API to collect Data:
 // ––––––––––––––––––––––––––––––––––
@@ -108,7 +121,18 @@ function teamNameHtml(data) {
 // 5: bayern, 81: barca, 4: dortmund, 86: RM, 109: juve, 559: svla, 338: lcfc,
 // 65: man city, 73: tott, 57: arsenal, 113: napoli
 
-i = 4;
+// we need something to assign the numbers of i to the item.name value that
+// that returns the number into i. 
+
+teamInfo = {
+ "manchester city": 65,
+ "arsenal": 57,
+ "bayern": 5
+}
+
+// string should be = to item.name string
+// if it is not, then return "not a team"
+// search team via item.name
 
 // team names and info tied to list of numbers
 
@@ -117,10 +141,11 @@ i = 4;
 // when user types in a name in input and clicks search button,
 // the ajax request url changes to the number assigned to the string that the user typed. 
 
-function getData(callback) {
+function getData(num, callback) {
+  console.log(num);
   $.ajax({
     headers: { 'X-Auth-Token': apiKey },
-    url: `http://api.football-data.org/v1/teams/${i}/players`,
+    url: `http://api.football-data.org/v1/teams/${num}/players`,
     dataType: 'json',
     type: 'GET',
   }).done(function(data) {
@@ -133,10 +158,10 @@ function getData(callback) {
   });
 } // first ajax function that accesses player data by team 
 
-function getTeamName(callback) {
+function getTeamName(num, callback) {
   $.ajax({
     headers: { 'X-Auth-Token': apiKey },
-    url: `http://api.football-data.org/v1/teams/${i}`,
+    url: `http://api.football-data.org/v1/teams/${num}`,
     dataType: 'json',
     type: 'GET',
   }).done(function(data) {
@@ -144,6 +169,20 @@ function getTeamName(callback) {
   }); 
 } // second ajax request w/ different scope from first. this accesses 
 // team's general information rather than player info
+
+function getTeam(num, callback) {
+  $.ajax({
+    headers: { 'X-Auth-Token': apiKey },
+    url: `http://api.football-data.org/v1/competitions/440/teams`,
+    dataType: 'json',
+    type: 'GET',
+  }).done(function(data) {
+    console.log(data);
+    getTeamNames(data);
+    // callback function invoked here that gets name and puts it as our state object's key
+    // that key which is the name value is assigned in our state to a number 
+  }); 
+}
 
 // Step 4: Render
 // ==========================
@@ -182,7 +221,7 @@ function makeGraph() {
         }],
 
         yAxes: [{
-          label: 'age'
+          label: 'age',
           type: 'linear',
           ticks: {
             min: 15,
@@ -203,14 +242,42 @@ function makeGraph() {
 // we have access to any team with a number. 
 // We need to connect the input and search button 
 
+// 
+
+
+function handleSubmit($btn, $input) {
+  $btn.on("click", function(e) {
+    let userSearch = $input.val(); //arsenal
+    let tempNum=0;
+    for(let key in teamInfo){
+      if(key === userSearch){
+            tempNum = teamInfo[userSearch] //"arsenal: 87"
+      }
+    }
+    //console.log(tempNum);
+    getData(tempNum);
+    getTeamName(tempNum);
+    getTeam();
+    //console.log(userSearch);
+    $input.val("");
+    e.preventDefault();
+    // if icon, team name, and graph are hidden remove hidden class from icon, team name, and graph.
+    // else, do nothing. 
+  });
+}
+
+
+$(function() {
+  handleSubmit($("#btn"), $("#search"));
+})
+
 
 // Initialize
 // ==========================
 
 //Invocation of Functions:
 
-getData();
-getTeamName();
+
 
 // WHAT IS LEFT?
 // –––––––––––––

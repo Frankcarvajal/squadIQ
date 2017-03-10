@@ -15,6 +15,10 @@
   height: 150px;
 }
 
+.hideMe {
+  display: none;
+}
+
 .datarow {
   width: 100%;
   height: 100px;
@@ -32,8 +36,6 @@
 }
 
 #chart {
-  /*    height: 5px;
-  width: 5px;*/
   text-align: center;
   margin: auto 0;
   padding: auto 0;
@@ -49,16 +51,24 @@ canvas {
   width: 100%;
 }
 
+
 .team-name img {
   max-height: 150px;
   max-width: 150px;
-  padding: 14px;
-  padding-right: 100px;
+  margin: 50px;
+  display: inline;
+}
+
+.team-name h2 {
+  text-align: center;
+  padding-top: 50px;
+  display: inline;
 }
 
 .iconblock {
   font-size: 50px;
   background-color: ghostwhite;
+  max-height: 200px;
 }
 
 .team-name-class {
