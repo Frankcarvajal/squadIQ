@@ -41,7 +41,23 @@ function makeNames(data) {
     nameOfPlayers.forEach(function(item) {
         names.push(item);
     })
+    console.log(data);
     console.log(names);
+    //whatever we do with our data has to be done within here.
+
+}
+
+var jerseyNumbers = [];
+
+function jerseyNumber(data) {
+    let theJerseyNumber = data.players.map(function(item, index) {
+        return `${item.jerseyNumber}`;
+    });
+    theJerseyNumber.forEach(function(item) {
+        jerseyNumbers.push(item);
+    })
+    console.log(data);
+    console.log(jerseyNumbers);
     //whatever we do with our data has to be done within here.
 
 }
@@ -64,13 +80,17 @@ var dobs = [];
 
 function makeDob(data) {
     let dateOfB = data.players.map(function(item, index) {
-        return `${item.dateOfBirth}`;
+        // console.log(item.dateOfBirth);
+        return moment(`${item.dateOfBirth}`, "YYYY-MM-DD").month(0).from(moment().month(0)).substr(0, item.dateOfBirth.length - 8);
+
     });
     dateOfB.forEach(function(item) {
         dobs.push(item);
     })
     console.log(dobs);
     //whatever we do with our data has to be done within here.
+
+
 
 }
 
@@ -102,6 +122,7 @@ function getData(callback) {
     }).done(function(data) {
 
         makeNames(data);
+        jerseyNumber(data);
         makePosition(data);
         makeDob(data);
         makeValue(data);
@@ -130,7 +151,7 @@ function getData(callback) {
     });
 }
 
-getData(makeNames, makePosition, makeDob, makeValue);
+getData(makeNames, jerseyNumber, makePosition, makeDob, makeValue);
 
 
 // iterate through each object in the array and pull out the specific data of the three variables.
@@ -148,6 +169,8 @@ getData(makeNames, makePosition, makeDob, makeValue);
 // Step 5: User Actions
 // ==========================
 
+
+// Have if else function if under a million sort awkwardly if > 1m map out range, else map out four digits == .75
 
 
 // Initialize
@@ -168,7 +191,7 @@ $(function() {
 
                 // Data from state goes here:
                 data: [
-                    { x: 10, y: 10, r: 10 },
+                    { x: 10, y: 10, r: 75 },
                     { x: 15, y: 15, r: 10 }
                 ]
             }]
