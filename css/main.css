@@ -1,6 +1,6 @@
 .bannerrow {
-  width: auto;
-  border: solid black 5px;
+  width: 100%;
+  border: solid black 2px;
 }
 
 .banner {
@@ -23,6 +23,7 @@
   width: 100%;
   height: 100px;
   background: transparent;
+  display: inline-block;
 }
 
 .datarow h1 {
@@ -37,9 +38,6 @@
 
 #chart {
   text-align: center;
-  margin: auto 0;
-  padding: auto 0;
-  margin-right: 100px;
 }
 
 canvas {
@@ -49,29 +47,15 @@ canvas {
 .team-name {
   height: 150px;
   width: 100%;
+  background: lightgrey;
 }
-
 
 .team-name img {
+  margin-left: 20px;
   max-height: 150px;
   max-width: 150px;
-  margin: 50px;
   display: inline;
 }
-
 .team-name h2 {
-  text-align: center;
-  padding-top: 50px;
-  display: inline;
-}
-
-.iconblock {
-  font-size: 50px;
-  background-color: ghostwhite;
-  max-height: 200px;
-}
-
-.team-name-class {
-  margin: 50px;
-  margin-bottom: 100px;
+  display:inline;
 }

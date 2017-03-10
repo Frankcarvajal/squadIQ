@@ -37,6 +37,7 @@ var dobs = [];
 var marketValues = [];
 var jerseyNumbers = [];
 var teamNames = [];
+var newChart;
 
 function makeNames(data) {
   let nameOfPlayers = data.players.map(function(item, index) {
@@ -61,6 +62,7 @@ function makePosition(data) {
 } //identify team's player positions as array
 
 function makeNumber(data) {
+  jerseyNumbers = [];
   let jerseyNumber = data.players.map(function(item, index) {
     return `${item.jerseyNumber}`;
   });
@@ -72,6 +74,7 @@ function makeNumber(data) {
 } //identify team's jersey numbers as array 
 
 function makeDob(data) {
+  dobs = [];
   let dateOfB = data.players.map(function(item, index) {
     return `${item.dateOfBirth}`;
   });
@@ -83,6 +86,7 @@ function makeDob(data) {
 } //identify player's date of birth (dob)
 
 function makeValue(data) {
+  marketValues = [];
   let playerValues = data.players.map(function(item, index) {
     return `${item.marketValue}`;
   });
@@ -97,7 +101,7 @@ function makeValue(data) {
 function teamNameHtml(data) {
   console.log(data.name);
   let mappedHtml = function(item, index) {
-    return ` <div class="ten column iconblock"> <img src="${data.crestUrl}" id="team-icon"><h2 class="team-name-class" style="display:inline">${data.name}</h2> </div> `;
+    return ` <div class="three columns"><img src="${data.crestUrl}" id="team-icon"></div><div class="five columns"><h2>${data.name}</h2></div> `;
   };
   $('.team-name').html(mappedHtml);
   // console.log(mappedHtml);
@@ -127,7 +131,11 @@ function getTeamNames(data) {
 teamInfo = {
  "manchester city": 65,
  "arsenal": 57,
- "bayern": 5
+ "bayern": 5,
+ "dortmund": 4,
+ "napoli": 113,
+ "barcelona": 81,
+ "real madrid": 86
 }
 
 // string should be = to item.name string
@@ -154,7 +162,7 @@ function getData(num, callback) {
     makeNumber(data);
     makeDob(data);
     makeValue(data);
-    makeGraph()
+    makeGraph();
   });
 } // first ajax function that accesses player data by team 
 
@@ -190,7 +198,14 @@ function getTeam(num, callback) {
 // Graph Creation & Data
 // –––––––––––––––––––––
 function makeGraph() {
+
+  if (newChart !== undefined){
+    $('#destroyChart').html(`<canvas id='chart'></canvas>`); 
+  }
   const chartElement = $('#chart')
+
+  console.log(`I have ${dobs.length} circles in my data store to draw`)
+
   var data = [];
   dobs.forEach(function(item, index) {
     var value = marketValues[index] / 1000000;
@@ -198,11 +213,11 @@ function makeGraph() {
     data.push({ x: number, y: item, r: value });
   }) 
 
-  new Chart(chartElement, {
+  newChart = new Chart(chartElement, {
     type: 'bubble',
     data: {
       datasets: [{
-        label: '# Age $ 1=$1M)',
+        label: '# Age $ (1=$1M)',
         // Data from state goes here:
         data: data
             // number, age, market value
@@ -270,7 +285,6 @@ function handleSubmit($btn, $input) {
 $(function() {
   handleSubmit($("#btn"), $("#search"));
 })
-
 
 // Initialize
 // ==========================
