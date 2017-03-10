@@ -95,7 +95,8 @@ function makeValue(data) {
 
 
 // Independent variable to determine team data request
-i = 5;
+i = 5
+;
 
 
 function getData(callback) {
@@ -149,10 +150,11 @@ function makeGraph() {
     // Start with three arrays, age, value, jersey
 
     var data = [];
+
     dobs.forEach(function(item, index) {
-        var value = marketValues[index];
+        var value = marketValues[index] / 1000000;
         var number = jerseyNumbers[index];
-        data.push({ x: item, y: number, r: 5 });
+        data.push({ x: item, y: number, r: value});
     })
 
     // end with this [{ x: 10, y: 10, r: 10 }, ...]
@@ -161,8 +163,7 @@ function makeGraph() {
         type: 'bubble',
         data: {
             datasets: [{
-                label: 'First Dataset',
-
+                label: 'Jersey Number, Age, & Current Value (divided by 1 mil)',
                 // Data from state goes here:
                 data: data
                     // number, age, market value
@@ -172,6 +173,7 @@ function makeGraph() {
         options: {
             scales: {
                 xAxes: [{
+                    label: 'age',
                     type: 'linear',
                     ticks: {
                         min: 15,
@@ -183,7 +185,7 @@ function makeGraph() {
                     type: 'linear',
                     ticks: {
                         min: 0,
-                        max: 45
+                        max: 30
                     }
                 }]
             }
