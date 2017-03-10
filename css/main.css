@@ -1,17 +1,19 @@
+h1{
+  text-align: center;
+  font-size: 100px;
+}
 .bannerrow {
   width: 100%;
-  border: solid black 2px;
 }
 
 .banner {
   width: 100%;
-  height: 150px;
+  height: 100px;
   color: black;
   font-size: 4rem;
 }
 
 .banner2 {
-  width: 150px;
   height: 150px;
 }
 
@@ -45,17 +47,23 @@ canvas {
 }
 
 .team-name {
-  height: 150px;
+  height: 100px;
   width: 100%;
-  background: lightgrey;
 }
 
 .team-name img {
   margin-left: 20px;
-  max-height: 150px;
-  max-width: 150px;
-  display: inline;
+  max-height: 100px;
+  max-width: 100px;
+  display: inline-block;
 }
 .team-name h2 {
-  display:inline;
+  display:inline-block;
+  margin-left: 30px;
+}
+
+.together {
+  display:flex;
+  align-items: center;
+  background: lightgrey;
 }

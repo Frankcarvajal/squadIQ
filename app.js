@@ -101,7 +101,7 @@ function makeValue(data) {
 function teamNameHtml(data) {
   console.log(data.name);
   let mappedHtml = function(item, index) {
-    return ` <div class="three columns"><img src="${data.crestUrl}" id="team-icon"></div><div class="five columns"><h2>${data.name}</h2></div> `;
+    return ` <div class="together"><img src="${data.crestUrl}" id="team-icon"><h2>${data.name}</h2></div> `;
   };
   $('.team-name').html(mappedHtml);
   // console.log(mappedHtml);
