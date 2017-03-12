@@ -1,5 +1,5 @@
 # SquadIQ <br>
-***description***: Thinkful Capstone I
+***description***: Thinkful Capstone I<br>
 ***assignment***: Soccer API with graphed analysis of squad values <br>
 ***authors***: Franklin Carvajal (@HexisHacks) + Colin Van Sickle (@cfv7)<br>
 
