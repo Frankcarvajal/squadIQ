@@ -1,6 +1,6 @@
-Project: SquadIQ 
-Description: Thinkful Capstone I, Soccer API with graphed analysis of squad values
-Authors: Franklin Carvajal (@HexisHacks) + Colin Van Sickle (@cfv7)
+***Project***: SquadIQ <br>
+***Description***: Thinkful Capstone I, Soccer API with graphed analysis of squad values <br>
+***Authors***: Franklin Carvajal (@HexisHacks) + Colin Van Sickle (@cfv7)<br>
 
 
 
