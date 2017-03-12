@@ -3,6 +3,7 @@ Date: 3.9.17
 Project: Capstone I (API)
 */
 
+// Reviewed by Peter 03/12/2017 --> Good job on the readme!
 
 // Step 1: Requirements.
 // ==========================
@@ -10,7 +11,7 @@ Project: Capstone I (API)
 // 1. App should allow the user to search for an item (menu options clickable instead)
 // 2. List the results from the search (click from menu)
 // 3. Use API (must support CORS & JSONP is not an option)
-//    Should support https - required if deploying to hosts that use https. 
+//    Should support https - required if deploying to hosts that use https.
 //    And required if/when integrating into authentication
 
 // Bonus: integrate additional API like maps or form
@@ -31,104 +32,9 @@ const initialState = {
 
 // Organize and sorts ajax data into separate arrays via functions
 
-var names = [];
-var positions = [];
-var dobs = [];
-var marketValues = [];
-var jerseyNumbers = [];
-var teamNames = [];
-var newChart;
-
-function makeNames(data) {
-  let nameOfPlayers = data.players.map(function(item, index) {
-    return `${item.name}`;
-  });
-  nameOfPlayers.forEach(function(item) {
-    names.push(item);
-  })
-  console.log(names);
-} //indentify name of player in index as string
-
-function makePosition(data) {
-  
-
-  let thePositions = data.players.map(function(item, index) {
-    return `${item.position}`;
-  });
-  thePositions.forEach(function(item) {
-    positions.push(item);
-  })
-  console.log(positions);
-} //identify team's player positions as array
-
-function makeNumber(data) {
-  jerseyNumbers = [];
-  let jerseyNumber = data.players.map(function(item, index) {
-    return `${item.jerseyNumber}`;
-  });
-  jerseyNumber.forEach(function(item) {
-    item = parseInt(item);
-    jerseyNumbers.push(item);
-  })
-  console.log(jerseyNumbers);
-} //identify team's jersey numbers as array 
-
-function makeDob(data) {
-  dobs = [];
-  let dateOfB = data.players.map(function(item, index) {
-    return `${item.dateOfBirth}`;
-  });
-  dateOfB.forEach(function(item) {
-    item = new Date().getFullYear() - parseInt(item);
-    dobs.push(item);
-  })
-  console.log(dobs);
-} //identify player's date of birth (dob)
-
-function makeValue(data) {
-  marketValues = [];
-  let playerValues = data.players.map(function(item, index) {
-    return `${item.marketValue}`;
-  });
-  playerValues.forEach(function(item) {
-    item = item.replace(/\D/g, '');
-    item = parseInt(item);
-    marketValues.push(item);
-  })
-  // console.log(marketValues);
-} //identify player's current value
-
-function teamNameHtml(data) {
-  console.log(data.name);
-  let mappedHtml = function(item, index) {
-    return ` <div class="together"><img src="${data.crestUrl}" id="team-icon"><h2>${data.name}</h2></div> `;
-  };
-  $('.team-name').html(mappedHtml);
-  // console.log(mappedHtml);
-} //plug team name and crest into HTML after accesing in getTeamName function
-
-
-function getTeamNames(data) {
-  let theNames = data.teams.map(function(item, index) {
-    return `${item.name}`;
-  });
-  theNames.forEach(function(item) {
-    teamNames.push(item);
-  })
-  console.log(teamNames);
-} //identify team's player positions as array
-
-// AJAX Calls to API to collect Data:
-// ––––––––––––––––––––––––––––––––––
-
-// Some team numbers: 
-// 5: bayern, 81: barca, 4: dortmund, 86: RM, 109: juve, 559: svla, 338: lcfc,
-// 65: man city, 73: tott, 57: arsenal, 113: napoli
-
-// we need something to assign the numbers of i to the item.name value that
-// that returns the number into i. 
-
-teamInfo = {
+// This should be built out dynamically with the first call to the API in
+// getAllTeamNames
+const teamIds = {
  "manchester city": 65,
  "arsenal": 57,
  "bayern": 5,
@@ -139,88 +45,58 @@ teamInfo = {
  "real madrid": 86
 }
 
-// string should be = to item.name string
-// if it is not, then return "not a team"
-// search team via item.name
+// State Object
+var state = {
+  players: [],
+  teams: []
+};
 
-// team names and info tied to list of numbers
-
-// Independent variable to determine team data ajax request.
-// Assign the teams name to each number for inputting into the ajax request. 
-// when user types in a name in input and clicks search button,
-// the ajax request url changes to the number assigned to the string that the user typed. 
-
-function getData(num, callback) {
-  console.log(num);
-  $.ajax({
-    headers: { 'X-Auth-Token': apiKey },
-    url: `http://api.football-data.org/v1/teams/${num}/players`,
-    dataType: 'json',
-    type: 'GET',
-  }).done(function(data) {
-    // makeNames(data);
-    // makePosition(data);
-    makeNumber(data);
-    makeDob(data);
-    makeValue(data);
-    makeGraph();
+// Function for updating state with each player's individual data points
+// The function receives the data from the first API response
+// We add each player's data to the players array in state.
+// Each player's data is stored as an indexed object in the array
+function updateState(data) {
+  data.players.forEach(function(player) {
+    let modifyDob = new Date().getFullYear() - parseInt(player.dateOfBirth);
+    let modifyValue = Number(player.marketValue.replace(/\D/g, ''));
+    state.players.push({
+      name: player.name,
+      position: player.position,
+      dob: modifyDob,
+      marketValue: modifyValue,
+      jerseyNumber: player.jerseyNumber
+    });
   });
-} // first ajax function that accesses player data by team 
-
-function getTeamName(num, callback) {
-  $.ajax({
-    headers: { 'X-Auth-Token': apiKey },
-    url: `http://api.football-data.org/v1/teams/${num}`,
-    dataType: 'json',
-    type: 'GET',
-  }).done(function(data) {
-    teamNameHtml(data);
-  }); 
-} // second ajax request w/ different scope from first. this accesses 
-// team's general information rather than player info
-
-function getTeam(num, callback) {
-  $.ajax({
-    headers: { 'X-Auth-Token': apiKey },
-    url: `http://api.football-data.org/v1/competitions/440/teams`,
-    dataType: 'json',
-    type: 'GET',
-  }).done(function(data) {
-    console.log(data);
-    getTeamNames(data);
-    // callback function invoked here that gets name and puts it as our state object's key
-    // that key which is the name value is assigned in our state to a number 
-  }); 
 }
 
-// Step 4: Render
-// ==========================
+function updateTeamNames(data) {
+  data.teams.forEach(function(teamName) {
+    state.teams.push(teamName);
+  });
+}
 
-// Graph Creation & Data
-// –––––––––––––––––––––
-function makeGraph() {
+// Functions for building and rendering the chart
+// functions for making html to insert into the DOM
+// Render functions
+function makeGraph(state) {
+  const $chartElement = $('#chart');
+  var chartData = [];
+  var newChart;
 
-  if (newChart !== undefined){
-    $('#destroyChart').html(`<canvas id='chart'></canvas>`); 
-  }
-  const chartElement = $('#chart')
+  state.players.forEach(function(player) {
+    let value = player.marketValue / 1000000;
+    let number = player.jerseyNumber;
+    let dob = player.dob;
+    chartData.push({ x: number, y: dob, r: value });
+  });
 
-  console.log(`I have ${dobs.length} circles in my data store to draw`)
-
-  var data = [];
-  dobs.forEach(function(item, index) {
-    var value = marketValues[index] / 1000000;
-    var number = jerseyNumbers[index];
-    data.push({ x: number, y: item, r: value });
-  }) 
-
-  newChart = new Chart(chartElement, {
+  newChart = new Chart($chartElement, {
     type: 'bubble',
     data: {
       datasets: [{
         label: 'x: kit # // y: player age // dot size: current value (1=€1M)',
         // Data from state goes here:
-        data: data
+        data: chartData
             // number, age, market value
       }]
     },
@@ -246,52 +122,103 @@ function makeGraph() {
         }]
       }
     }
-  })
-} // asynchronously pushes indexed values from arrays made by ajax requests into x, y, and r
-
-// Step 5: User Actions (Event Listeners)
-// ==========================
-
-// i can go from team 1 to team 460
-
-// All Teams are assigned to a number and for get team name function
-// we have access to any team with a number. 
-// We need to connect the input and search button 
-
-// 
-
-
-function handleSubmit($btn, $input) {
-  $btn.on("click", function(e) {
-    let userSearch = $input.val(); //arsenal
-    let tempNum=0;
-    for(let key in teamInfo){
-      if(key === userSearch){
-            tempNum = teamInfo[userSearch] //"arsenal: 87"
-      }
-    }
-    //console.log(tempNum);
-    getData(tempNum);
-    getTeamName(tempNum);
-    getTeam();
-    //console.log(userSearch);
-    $input.val("");
-    e.preventDefault();
-    // if icon, team name, and graph are hidden remove hidden class from icon, team name, and graph.
-    // else, do nothing. 
   });
 }
 
+// Render team name and crest, this comes from a second request to the API
+// Plug team name and crest into HTML after accesing in getTeamName function
+function teamNameHtml(data) {
+  const $teamName = $('.team-name');
+  let mappedHtml = function(item, index) {
+    return ` <div class="together"><img src="${data.crestUrl}" id="team-icon"><h2>${data.name}</h2></div> `;
+  };
+  $teamName.html(mappedHtml);
+}
 
+
+// Ajax functions for getting player and team data according to team id number
+// getTeamName will be invoked when the response to getData comes back
+// getTeamName therefore sends the second request to the API.
+// When response to 2nd request returns, render all data (graph, team name, team crest)
+function getTeamName(idNum) {
+  $.ajax({
+    headers: { 'X-Auth-Token': apiKey },
+    url: `http://api.football-data.org/v1/teams/${idNum}`,
+    dataType: 'json',
+    type: 'GET',
+  }).done(function(data) {
+    // callback functions to handle response from the API go here
+    teamNameHtml(data);
+    makeGraph(state);
+  });
+}
+
+// getData is responsible for sending the first request to the API to get the data for each player
+// for the given team
+// when the response to this request returns, call getTeamName to send the 2nd request to the API
+// to get the team's name and crest
+function getData(idNum) {
+  $.ajax({
+    headers: { 'X-Auth-Token': apiKey },
+    url: `http://api.football-data.org/v1/teams/${idNum}/players`,
+    dataType: 'json',
+    type: 'GET',
+  }).done(function(data) {
+    // callback functions to handle response go here
+    // make sure state is empty and ready for new data upon receiving the response from the request
+    // to the API --> This means the user wants to search for data for a new team, so just empty the
+    // array in state
+    state.players = []; // array is now empty
+    // then update state with the data from the response and then send second ajax request to API
+    updateState(data);
+    getTeamName(idNum); // second ajax request is sent here
+    console.log(state);
+  });
+}
+
+// Third AJAX request will only be called one time per use of application
+// This request generates a list of all the teams available in the API
+function getAllTeamNames() {
+  $.ajax({
+    headers: { 'X-Auth-Token': apiKey },
+    url: `http://api.football-data.org/v1/competitions/440/teams`,
+    dataType: 'json',
+    type: 'GET',
+  }).done(function(data) {
+    //console.log(data); // look at how you can parse out the id number here for each time
+    // callback functions to handle response go here
+    // The following pushes the data to an array in state --> an array of all team names
+    // You could use that array to implement jQuery UI's autocomplete functionality
+    updateTeamNames(data);
+    // Function 2 makes an object with name of team as the prop and each prop has the team's id
+  });
+}
+
+// Event listener to handle user's input
+// User will search for a team name via the input field in the DOM
+function handleSubmit($btn, $input) {
+  $btn.on("click", function(e) {
+    let userSearch = $input.val().toLowerCase(); // for example, 'arsenal'
+    for (let key in teamIds) {
+      if (key === userSearch) {
+        let id = teamIds[userSearch]; //"arsenal: 87"
+        getData(id);
+        $input.val("");
+        e.preventDefault();
+      }
+    }
+  });
+}
+
+// Document ready and invoke functions
 $(function() {
+  // When the page loads, send a request to the API to get all the team names
+  // so invoke 'getAllTeamNames.' This will send one request and build an array with the names
+  // of all the teams
+  getAllTeamNames();
+  // Activate event listener by invoking function 'handleSubmit'
   handleSubmit($("#btn"), $("#search"));
-})
-
-// Initialize
-// ==========================
-
-//Invocation of Functions:
-
+});
 
 
 // WHAT IS LEFT?
@@ -299,5 +226,5 @@ $(function() {
 
 // 1. Search Input Bar and button ( form input, click event listeners, & btn  )
 // 2. Optimize CSS layout of Icon/Name
-// 3. Control Changes to Graph Colors 
+// 3. Control Changes to Graph Colors
 // 4. Ajax url # function for assignment to team names . see below.
