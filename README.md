@@ -1,4 +1,9 @@
-WHY???????????
+Project: SquadIQ 
+Description: Thinkful Capstone I, Soccer API with graphed analysis of squad values
+Authors: Franklin Carvajal (@HexisHacks) + Colin Van Sickle (@cfv7)
+
+
+
 		
 		To show what weve learned. HTML CSS JS JQ AJAX API UNDERSTANDING DOM ..
 
