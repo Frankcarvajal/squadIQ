@@ -22,7 +22,7 @@ Project: Capstone I (API)
 // API Key assigned:
 const apiKey = "934d18fc6b4145d8bc4d19ac49de9dac";
 
-const initialState = {
+const initialState = { //WH: doesn't appear this is ever used
   key: {}
 }
 
@@ -31,7 +31,7 @@ const initialState = {
 
 // Organize and sorts ajax data into separate arrays via functions
 
-var names = [];
+var names = []; //WH: these look like they should be in state. i thought a state might be unnecessary for API but was told i should still use one
 var positions = [];
 var dobs = [];
 var marketValues = [];
@@ -39,7 +39,7 @@ var jerseyNumbers = [];
 var teamNames = [];
 var newChart;
 
-function makeNames(data) {
+function makeNames(data) { //WH: Some of these functions look like they can be refactored with second parameter of "name" or "positions" though not a huge benefit
   let nameOfPlayers = data.players.map(function(item, index) {
     return `${item.name}`;
   });
@@ -98,7 +98,7 @@ function makeValue(data) {
   // console.log(marketValues);
 } //identify player's current value
 
-function teamNameHtml(data) {
+function teamNameHtml(data) { //WH: seems out of order with other functions, looks like a render function
   console.log(data.name);
   let mappedHtml = function(item, index) {
     return ` <div class="together"><img src="${data.crestUrl}" id="team-icon"><h2>${data.name}</h2></div> `;
@@ -108,7 +108,7 @@ function teamNameHtml(data) {
 } //plug team name and crest into HTML after accesing in getTeamName function
 
 
-function getTeamNames(data) {
+function getTeamNames(data) { //WH: name is unclear, i would think it returns stuff like "Arsenal" "Dortmund" etc
   let theNames = data.teams.map(function(item, index) {
     return `${item.name}`;
   });
@@ -128,7 +128,7 @@ function getTeamNames(data) {
 // we need something to assign the numbers of i to the item.name value that
 // that returns the number into i. 
 
-teamInfo = {
+teamInfo = { //WH: this looks like something that should be in state, or at least organized at top w/other data
  "manchester city": 65,
  "arsenal": 57,
  "bayern": 5,
@@ -150,14 +150,14 @@ teamInfo = {
 // when user types in a name in input and clicks search button,
 // the ajax request url changes to the number assigned to the string that the user typed. 
 
-function getData(num, callback) {
+function getData(num, callback) { //WH: think these calls better as JSON calls
   console.log(num);
   $.ajax({
     headers: { 'X-Auth-Token': apiKey },
     url: `http://api.football-data.org/v1/teams/${num}/players`,
     dataType: 'json',
     type: 'GET',
-  }).done(function(data) {
+  }).done(function(data) { //WH:..don't tell me we could've avoided callback hell with this
     // makeNames(data);
     // makePosition(data);
     makeNumber(data);
@@ -264,7 +264,7 @@ function makeGraph() {
 function handleSubmit($btn, $input) {
   $btn.on("click", function(e) {
     let userSearch = $input.val(); //arsenal
-    let tempNum=0;
+    let tempNum=0; //WH: may be intended, make sure you understand what will render if it stays at 0 due to bug or something 
     for(let key in teamInfo){
       if(key === userSearch){
             tempNum = teamInfo[userSearch] //"arsenal: 87"
@@ -301,4 +301,3 @@ $(function() {
 // 2. Optimize CSS layout of Icon/Name
 // 3. Control Changes to Graph Colors 
 // 4. Ajax url # function for assignment to team names . see below.
-0
