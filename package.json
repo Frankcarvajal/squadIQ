@@ -1,0 +1,25 @@
+{
+  "name": "2.4_2.5",
+  "version": "1.0.0",
+  "description": "***Project***: SquadIQ <br> ***Description***: Thinkful Capstone I, Soccer API with graphed analysis of squad values <br> ***Authors***: Franklin Carvajal (@HexisHacks) + Colin Van Sickle (@cfv7)<br>",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HexisHacks/2.4_2.5.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HexisHacks/2.4_2.5/issues"
+  },
+  "homepage": "https://github.com/HexisHacks/2.4_2.5#readme",
+  "devDependencies": {
+    "eslint": "^3.17.1",
+    "eslint-config-airbnb-base": "^11.1.1",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-react": "^6.10.0"
+  }
+}
