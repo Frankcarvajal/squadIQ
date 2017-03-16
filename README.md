@@ -10,9 +10,11 @@
 ##***background***
 Our motivations behind this project were threefold:
 		
-1) To showcase what we've learned about JS, JQ, AJAX & APIs.
-2) To test correlation between interesting soccer squad metrics.
-3) To make a tool that users can use to better understand avaiable soccer data.
+1) To showcase what we've learned about JS, JQ, AJAX & APIs.<br>
+
+2) To test correlation between interesting soccer squad metrics.<br>
+
+3) To make a tool that users can use to better understand avaiable soccer data.<br>
 
 ##***summary***
 This app asynchronously draws data from http://api.football-data.org/index and produces a  <br>
