@@ -19,11 +19,11 @@ Project: Capstone I (API)
 // ==========================
 
 // API Key assigned:
-const apiKey = "934d18fc6b4145d8bc4d19ac49de9dac";
+const apiKey = '934d18fc6b4145d8bc4d19ac49de9dac';
 
-const initialState = {
-  key: {}
-}
+// const initialState = {
+//   key: {}
+// }
 
 // Step 3: CRUD Functions.
 // ==========================
@@ -36,21 +36,18 @@ var dobs = [];
 var marketValues = [];
 var jerseyNumbers = [];
 var teamNames = [];
-var newChart;
 
-function makeNames(data) {
-  let nameOfPlayers = data.players.map(function(item, index) {
-    return `${item.name}`;
-  });
-  nameOfPlayers.forEach(function(item) {
-    names.push(item);
-  })
-  console.log(names);
-} //indentify name of player in index as string
+// function makeNames(data) {
+//   let nameOfPlayers = data.players.map(function(item, index) {
+//     return `${item.name}`;
+//   });
+//   nameOfPlayers.forEach(function(item) {
+//     names.push(item);
+//   })
+//   console.log(names);
+// } //indentify name of player in index as string
 
 function makePosition(data) {
-  
-
   let thePositions = data.players.map(function(item, index) {
     return `${item.position}`;
   });
@@ -128,6 +125,7 @@ function getTeamNames(data) {
 // that returns the number into i. 
 
 teamInfo = {
+ "": 57,
  "manchester city": 65,
  "arsenal": 57,
  "bayern": 5,
@@ -135,7 +133,9 @@ teamInfo = {
  "napoli": 113,
  "juventus": 109,
  "barcelona": 81,
- "real madrid": 86
+ "real madrid": 86,
+ "brugge": 851,
+ "villa": 58
 }
 
 // string should be = to item.name string
@@ -198,10 +198,7 @@ function getTeam(num, callback) {
 // Graph Creation & Data
 // –––––––––––––––––––––
 function makeGraph() {
-
-  if (newChart !== undefined){
-    $('#destroyChart').html(`<canvas id='chart'></canvas>`); 
-  }
+  $('#destroyChart').html(`<canvas id='chart'></canvas>`);  
   const chartElement = $('#chart')
 
   console.log(`I have ${dobs.length} circles in my data store to draw`)
@@ -213,14 +210,16 @@ function makeGraph() {
     data.push({ x: number, y: item, r: value });
   }) 
 
-  newChart = new Chart(chartElement, {
+  new Chart(chartElement, {
     type: 'bubble',
     data: {
       datasets: [{
-        label: 'x: kit # // y: player age // dot size: current value (1=€1M)',
-        // Data from state goes here:
+        backgroundColor: '#2c3e50',
+        borderColor: '#f39c12',
+        hoverBackgroundColor: '#f39c12',
+        hoverBorderColor: '#2c3e50',
+        label: 'x: jersey #; y: player age; r: current value (1=€1M)',
         data: data
-            // number, age, market value
       }]
     },
 
@@ -259,9 +258,11 @@ function makeGraph() {
 
 // 
 
-
-function handleSubmit($btn, $input) {
-  $btn.on("click", function(e) {
+$(function() {
+  handleSubmit($("#btn"), $("#search"));
+  function handleSubmit($btn, $input) {
+  $('.button-primary').on("click", function(e) {
+    console.log(e);
     let userSearch = $input.val(); //arsenal
     let tempNum=0;
     for(let key in teamInfo){
@@ -278,13 +279,13 @@ function handleSubmit($btn, $input) {
     e.preventDefault();
     // if icon, team name, and graph are hidden remove hidden class from icon, team name, and graph.
     // else, do nothing. 
+  })};
+  $('.u-full-width').on("keydown", function(e) {
+    if(e.keyCode == 13) 
+      $('.button-primary').click();
+      console.log('test');
   });
-}
-
-
-$(function() {
-  handleSubmit($("#btn"), $("#search"));
-})
+});
 
 // Initialize
 // ==========================
@@ -300,4 +301,3 @@ $(function() {
 // 2. Optimize CSS layout of Icon/Name
 // 3. Control Changes to Graph Colors 
 // 4. Ajax url # function for assignment to team names . see below.
-0

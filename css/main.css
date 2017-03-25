@@ -46,7 +46,7 @@ p {
     background: transparent;
 }
 
-.table {}
+/*.table {}*/
 
 .graph {
     margin: 0;
@@ -89,6 +89,30 @@ canvas {
     color: white;
 }
 
+.squad i {
+    padding-right: 50px;
+    padding-left: 50px;
+    color:#f39c12;
+
+}
+
+/*.squad:hover{
+    background-color:white;
+}*/
+.squad i:hover {
+    background-color: white;
+    padding-left: 50 px;
+    color: #2c3e50;
+}
+
 .row {
     background: #2c3e50;
+}
+
+/*.row:hover {
+    background:white;
+}*/
+
+.team-name {
+    color: white;
 }

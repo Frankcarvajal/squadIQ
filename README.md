@@ -3,18 +3,18 @@
 ***assignment***: Soccer API with graphed analysis of squad values <br>
 ***authors***: Franklin Carvajal (@HexisHacks) + Colin Van Sickle (@cfv7)<br>
 
-##***screenshot***
+## ***screenshot***
 
 ![screenshot](images/Screen Shot 2017-03-10 at 17.23.40.png)
 
-##***background***
+## ***background***
 Our motivations behind this project were threefold:
 		
 1) To showcase what we've learned about JS, JQ, AJAX & APIs.
 2) To test correlation between interesting soccer squad metrics.
 3) To make a tool that users can use to better understand avaiable soccer data.
 
-##***summary***
+## ***summary***
 This app asynchronously draws data from http://api.football-data.org/index and produces a  <br>
 'bubble' scatter chart which is a 3 dimensional representation of several squad metrics. <br>
 <br>
@@ -32,7 +32,7 @@ We are working to try and automate the process of adding teams to our object. <b
 We hope that this app can serve as a learning tool for those curious about how <br>
 kit numbers, age, and current value factor into the DNA of their favorite squads. <br>
 
-##***technology***
+## ***technology***
 HTML<br>
 JavaScript<br>
 jQuery<br>
@@ -42,7 +42,7 @@ AJAX requests<br>
 *Additional Libraries*<br>
 Chart.js<br>
 
-##***future implementations***
+## ***future implementations***
 		
 - [ ] Optimize our chart.js (add color and titles)
 - [ ] Improve search bar funcionality (allow capitalization and autocomplete)
